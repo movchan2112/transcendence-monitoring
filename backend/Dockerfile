@@ -15,5 +15,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# The command to run when the container starts
+# Copy the entrypoint script and make it executable
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Set the entrypoint script to be executed first
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# The command to run when the container starts (passed to entrypoint)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
